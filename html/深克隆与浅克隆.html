@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深克隆的实现</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>深克隆和浅克隆的基本定义</h1>
+        <hr />
+        <p>浅复制(浅克隆)：直接将存储在栈中的值赋值给对应变量，如果是基本数据类型，则直接赋值对应的值，如果是引用类型，则赋值的是地址</p>
+        <p>深复制(深克隆)：就是把数据赋值给对应的变量，从而产生一个与源数据不相干的新数据(数据地址已变化)。深拷贝，是拷贝对象各个层级的属性。它的本质是基本数据类型进行赋值。</p>
+    </div>
+    <script>
+        var obj1 = { a: "1", b: "2",c:{d:"4",e:"5"} }
+        var obj2 = { c: "3", d: "4", e: { a: "1", b: "2" } }
+        var newobj1 = {}
+
+        //shallow clone
+        var shallow = (obj) => {
+            newobj = obj
+            return newobj
+        }
+        newobj1 = shallow(obj1)
+        obj1.a = "3"//原对象更改，浅克隆对象也改
+        obj1.c.e*=2
+        console.log(obj1)
+        console.log(newobj1)
+        console.log(obj1 === newobj1)
+
+
+
+        //deep clone
+        var deep = (obj) => {
+            //方法1
+            // newobj=JSON.parse(JSON.stringify(obj))
+
+
+            // 方法2
+            // let newobj = Array.isArray(obj) ? [] : {}
+            // if (obj && typeof obj == "object") {
+            //     for (key in obj) {
+            //         if (obj.hasOwnProperty(key)) {
+            //             if (obj[key] && typeof obj[key] == "object") {
+            //                 newobj[key] = deep(obj[key])
+            //             } else {
+            //                 newobj[key] = obj[key]
+            //             }
+            //         }
+            //     }
+            // }
+
+            // 方法3JQuery的extend方法
+            newobj=$.extend(true,{},obj)
+
+            // newobj = { ...obj }
+            //解构赋值，如果所解构的原对象是一维数组或对象，其本质就是对基本数据类型进行等号赋值，那它就是深拷贝；
+            //如果是多维数组或对象，其本质就是对引用类型数据进项等号赋值，那它就是浅拷贝；
+            //最终的结论就是：解构赋值是浅拷贝（因为它确实不能对多维数组或对象达到深拷贝的作用）；
+
+
+            return newobj
+        }
+        newobj2 = deep(obj2)
+        console.log(obj2,newobj2,obj2.e.a,newobj2.e.a)
+        console.log(obj2 == newobj2)
+        obj2.d = "5"
+        obj2.e.a="10"
+        console.log(obj2,newobj2,obj2.e.a,newobj2.e.a)
+    </script>
+</body>
+
+</html>

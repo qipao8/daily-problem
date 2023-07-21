@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标题</title>
+</head>
+
+<body>
+    <div id="myDiv"></div>
+    <script>
+        function func(url) {
+            return new Promise((resolve, reject) => {
+                let xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    // 当请求状态变更，请求数据未接收完成时promise状态待定
+                    if (xmlhttp.readyState !== 4)
+                        return
+                    if (xmlhttp.status == 200) {
+                        resolve(JSON.parse(xmlhttp.response));
+                        document.getElementById("myDiv").innerHTML = xmlhttp.responseText
+                    } else reject(xmlhttp.statusText)
+                }
+                xmlhttp.open("GET", url);
+                xmlhttp.send();
+            })
+        }
+        async function x(url) {
+            try {
+                return await func(url)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        x("https://mock.c2cloud.cn/mock/613866eb2de2410022c8d936/example/lm").then(res => console.log(res))
+    </script>
+</body>
+
+</html>

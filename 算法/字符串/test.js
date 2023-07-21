@@ -1,0 +1,1 @@
+console.log('sfs'.substr(1,4))

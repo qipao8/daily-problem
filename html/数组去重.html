@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标题</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h3>为 Array 对象添加一个去除重复项的方法</h3>
+        <hr />
+        <pre>
+输入
+[false, true, undefined, null, NaN, 0, 1, {}, {}, 'a', 'a', NaN]
+输出
+[false, true, undefined, null, NaN, 0, 1, {}, {}, 'a']
+        </pre>
+
+        <pre style="color:red">
+            null==undefind //true
+            typeof null=="object" 
+            typeof undefined="undefined"
+
+            undefined和null除了和undefined或null相等
+            和其他相比都是false
+        </pre>
+
+        <p>关于NaN</p>
+        <pre>
+            typeof NaN=="number"
+            NaN!=任何东西
+            isNaN(NaN)==true  isNaN({})==true
+            isNaN(undefined)==true 
+        </pre>
+        <pre style="color: red;">
+            isNaN(null)==false
+        </pre>
+
+        <p>比较规则</p>
+        <pre>
+1.如果有一个操作数是布尔值，则在比较相等性之前先将其转换为数值
+false转为0，true转为1
+2.如果一个是字符串，另一个是数值，比较之前先将字符串转换为数值
+3.如果有一个是对象，另一个不是，则调用对象的valueOf（）方法，
+转为基本数据类型值比较。
+        </pre>
+
+        <pre>
+            true=={} //false
+            false=={} //false
+            {}==true //报错，{}被当作代码块了。
+            {}=={}  //false
+            []==0==""==false //true
+            []=="0" //false
+            [2]==2=="2" //true
+            []=={} //false
+
+        </pre>
+
+    </div>
+
+    <script>
+        Array.prototype.uniq = function () {
+            console.log("数组去重")
+
+            var len=this.length
+            for (let i = 0; i < len-1; i++) {
+                for (let j = i + 1; j < len; j++) {
+                    if(this[i]!=this[i]&&this[j]!=this[j]){
+                        //去他妈的NaN
+                        this.splice(j--,1)
+                        len--
+                    }else if(this[i]===this[j]){
+                            //去他妈的boolean,number,string
+                            this.splice(j--,1)
+                            len--
+                        }
+                }
+            }
+
+            console.log(this)
+        }
+        var arr =[false, true, undefined, null, NaN, 0, 1, {}, {}, 'a', 'a', NaN]
+        //  [false, null, null, true, false, true, undefined, null, undefined, undefined, NaN, 0, "0", 0, 1, {}, {}, 'a', 'a', NaN, "0", "1", 1, "1"]
+        arr.uniq()
+    </script>
+
+</body>
+
+</html>

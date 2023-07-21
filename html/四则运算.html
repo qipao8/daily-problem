@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标题</title>
+    <link rel="stylesheet" href="./css/base.css">
+</head>
+
+<body>
+    <div class="container">
+        <p>功能：四则运算</p>
+
+        <p>输入：strExpression：字符串格式的算术表达式，如: "3+2*{1+2*[-4/(8-6)+7]}"</p>
+
+        <p>返回：算术表达式的计算结果</p>
+    </div>
+    <script>
+        //1.将[]和{}转换为（）后用eval(string)直接计算
+        var str="3+2*{1+2*[-4/(8-6)+7]}"
+        str=str.replace(/\[|\{/g,'(').replace(/\]|\}/g,')')
+        console.log(eval(str))
+    </script>
+</body>
+
+</html>

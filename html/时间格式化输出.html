@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>date</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>按所给的时间格式输出指定的时间</h2>
+        <hr />
+        <p>格式说明</p>
+        <pre>
+对于 2014.09.05 13:14:20
+yyyy: 年份，2014
+yy: 年份，14
+MM: 月份，补满两位，09
+M: 月份, 9
+dd: 日期，补满两位，05
+d: 日期, 5
+HH: 24制小时，补满两位，13
+H: 24制小时，13
+hh: 12制小时，补满两位，01
+h: 12制小时，1
+mm: 分钟，补满两位，14
+m: 分钟，14
+ss: 秒，补满两位，20
+s: 秒，20
+w: 星期，为 ['日', '一', '二', '三', '四', '五', '六'] 中的某一个
+本 demo 结果为 五
+        </pre>
+        <pre>
+输入
+formatDate(new Date(1409894060000), 'yyyy-MM-dd HH:mm:ss 星期w')
+输出
+2014-09-05 13:14:20 星期五
+        </pre>
+    </div>
+
+    <script>
+        function formatDate(obj, str) {
+            var yyyy = obj.getFullYear()
+            var yy=(""+obj.getFullYear()).slice(-2)
+            var MM = (obj.getMonth()+1)
+            var M=""+obj.getMonth()
+            var dd = obj.getDate()
+            var HH = obj.getHours()
+            var mm = obj.getMinutes()
+            var ss = obj.getSeconds()
+            var w = obj.getDay()
+
+            if (MM < 10) MM = "0" + (obj.getMonth()+1)
+            if (dd < 10) dd = "0" + obj.getDate()
+            if (HH < 10) HH = "0" + obj.getHours()
+            if (mm < 10) mm = "0" + obj.getMinutes()
+            if (ss < 10) ss = "0" + obj.getSeconds()
+            switch (w) {
+                case 0: w = "日";
+                    break;
+                case 1: w = "一";
+                    break;
+                case 2: w = "二";
+                    break;
+                case 3: w = "三";
+                    break;
+                case 4: w = "四";
+                    break;
+                case 5: w = "五";
+                    break;
+                case 6: w = "六";
+                    break;
+            }
+            str=str.replace("yyyy",yyyy)
+            str=str.replace("MM",MM)
+            str=str.replace("dd",dd)
+            str=str.replace("HH",HH)
+            str=str.replace("mm",mm)
+            str=str.replace("ss",ss)
+            str=str.replace("w",w)
+            console.log(str)
+            return str
+        }
+        formatDate(new Date(), 'yyyy-MM-dd HH:mm:ss 星期w')
+    </script>
+
+</body>
+
+</html>

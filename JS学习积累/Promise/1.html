@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标题</title>
+</head>
+
+<body>
+    <script>
+        let http = new XMLHttpRequest()
+        http.onreadystatechange = function () {
+            if (http.readyState == 4 && http.status == 200) {
+                let res = JSON.parse(http.responseText)
+                console.log(res.data)
+                let p = res.data.num ? Promise.resolve(res.data.num) : Promise.reject(new Error('error'))
+                console.log(p)
+                p.then(res=>console.log(res),rej=>rej)
+            }
+        }
+        http.open('get', 'https://mock.c2cloud.cn/mock/613866eb2de2410022c8d936/lm', true)
+        http.send()
+    </script>
+</body>
+
+</html>
