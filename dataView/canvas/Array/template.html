@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组可视化</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="arrayCanvas" width="1000" height="600"></canvas>
+    <script type="module">
+        import { ArrayVisualizer } from './canvas/Array/arrayVisualizer.js';
+        import { countLargestGroup } from './methods.js'
+
+        // 创建一个ArrayVisualizer实例
+        const visualizer = new ArrayVisualizer('arrayCanvas');
+
+        // 调用countLargestGroup函数
+        (async () => {
+            const result = await countLargestGroup(13, visualizer);
+            console.log("Result:", result);
+        })();
+    </script>
+</body>
+
+</html>
